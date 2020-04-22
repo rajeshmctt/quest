@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use yii\helpers\Url;
+use common\models\Questionnaire;
 use backend\models\enums\DirectoryTypes;
 /* @var $this yii\web\View */
 /* @var $model common\models\Program */
@@ -48,30 +49,54 @@ use backend\models\enums\DirectoryTypes;
                                         <label class="control-label">Question Name</label>
                                         <?= $form->field($model, 'name')->textInput()->label(false) ?>										
                                     </div>
-                                </div>                                
+                                </div>  
                                 <div class=" form-group row"><!-- form-material-->
                                     <div class="col-sm-6">
-                                        <label class="control-label">Options</label><br>
+                                        <label class="control-label">Questionnaire</label>
+                                        <?= $form->field($model, 'questionnaire_id')->label(false)->widget(Select2::classname(), [
+											//'name' => 'User[location_id]',
+											//'id' => 'location', // location 6-4-18
+											//'value' => $location_name, // initial value
+											'data' => Questionnaire::getAll(),
+											'options' => ['placeholder' => 'Select Questionnaire', 'id' => 'qstnre'],
+											'pluginOptions' => [
+												'tags' => true,
+												'tokenSeparators' => [',', ' '],
+												// 'multiple'=>true, ,'multiple'=>true
+												'maximumInputLength' => 10
+											],
+										]);?>
+                                    </div>
+                                </div>                              
+                                <div class=" form-group row"><!-- form-material-->
+                                    <div class="col-sm-6">
+                                        <label class="control-label">Options (Select the correct answer)</label><br>
                                         <!--<div class="col-sm-12">
                                             <?//= $form->field($model, 'status')->radio(['label' => 'yes', 'value' => 1])?>
                                         </div>-->
                                         <!--<div class="col-sm-12">-->
-                                            <input type="radio" id="o1" name="select" value="1">
+                                            <!--<input type="radio" id="o1" name="select" value="1">
                                             <label for="male">
-                                                <input type="text" id="option1-name" class="form-control" name="Option1[name]" aria-invalid="false">
+                                                <input type="text" id="option1-name" class="form-control" name="Option[1]" aria-invalid="false">
                                             </label><br>
                                             <input type="radio" id="o2" name="select" value="2">
                                             <label for="female">
-                                                <input type="text" id="option2-name" class="form-control" name="Option2[name]" aria-invalid="false">
+                                                <input type="text" id="option2-name" class="form-control" name="Option[2]" aria-invalid="false">
                                             </label><br>
                                             <input type="radio" id="o3" name="select" value="3">
                                             <label for="other">
-                                                <input type="text" id="option3-name" class="form-control" name="Option3[name]" aria-invalid="false">
+                                                <input type="text" id="option3-name" class="form-control" name="Option[3]" aria-invalid="false">
                                             </label><br>
                                             <input type="radio" id="o4" name="select" value="4">
                                             <label for="other">
-                                                <input type="text" id="option4-name" class="form-control" name="Option4[name]" aria-invalid="false">
-                                            </label>
+                                                <input type="text" id="option4-name" class="form-control" name="Option[4]" aria-invalid="false">
+                                            </label>-->
+                                            <?php for($i=1;$i<=4;$i++){?>
+                                                <input type="radio" id="o<?=$i?>" name="select" value="<?=$i?>" <?=isset($oarr)?($oarr[$i]['is_correct']==1)?'checked':'':''?> >
+                                                <label for="o<?=$i?>">
+                                                    <input type="text" id="option<?=$i?>-name" class="form-control" name="Option[<?=$i?>]" aria-invalid="false" value="<?=isset($oarr)?$oarr[$i]['name']:''?>">
+                                                </label><br>    
+                                            <?php } ?>
                                         <!--</div>-->
                                     </div>
                                 </div>

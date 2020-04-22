@@ -1,6 +1,7 @@
 <?php
 
 namespace common\models;
+use yii\behaviors\TimestampBehavior;
 
 use Yii;
 
@@ -20,6 +21,8 @@ use Yii;
  */
 class Questionnaire extends \yii\db\ActiveRecord
 {
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 10;
     /**
      * {@inheritdoc}
      */
@@ -28,12 +31,20 @@ class Questionnaire extends \yii\db\ActiveRecord
         return 'questionnaire';
     }
 
+	public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
+			['status', 'default', 'value' => self::STATUS_ACTIVE],
             [['description'], 'string'],
             [['category_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 255],
@@ -75,5 +86,12 @@ class Questionnaire extends \yii\db\ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+	
+	public static function getAll()
+    {
+        $data = static::find()->where([ 'status' => 10])->all();
+        $value=(count($data)==0)? []: \yii\helpers\ArrayHelper::map($data, 'id','name');
+        return $value;
     }
 }

@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Question;
+use common\models\Options;
 use common\models\QuestionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -67,9 +68,23 @@ class QuestionController extends Controller
         $model = new Question();
 
         if ($model->load(Yii::$app->request->post())) {
-            echo "<pre>"; print_r(Yii::$app->request->post()); exit;
+            // echo "<pre>"; print_r(Yii::$app->request->post()); exit;
+            $mypost = Yii::$app->request->post();
+            $opts = $mypost['Option'];
+            // echo "<pre>"; print_r($opts[1]); exit;
             if($model->save()){
-
+                foreach($opts as $k => $opt){
+                    $option = new Options();
+                    $option->name = strval($opt);
+                    $option->question_id = $model->id;
+                    if($k == $mypost['select']){
+                        $option->is_correct = 1;
+                    }else{
+                        $option->is_correct = 0;
+                    }
+                    $option->save();
+                    // print_r($opt->getErrors()); exit;
+                }
             }
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -89,13 +104,44 @@ class QuestionController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $optso = Options::find()->where(['question_id'=>$id])->all();
+        $oarr = [];
+        $cnt = 1;
+        foreach($optso as $opto){
+            $oarr[$cnt]['name'] = $opto->name;
+            $oarr[$cnt]['is_correct'] = $opto->is_correct;
+            $cnt++;
+        }
+        if(count($oarr)==0){
+            for($i=1;$i<=4;$i++){
+                $oarr[$i]['name'] = '';
+                $oarr[$i]['is_correct'] = '';
+            }
+        }
+        // echo "<pre>"; print_r($oarr); exit;
+        if ($model->load(Yii::$app->request->post())) {
+            $mypost = Yii::$app->request->post();
+            $opts = $mypost['Option'];
+            // echo "<pre>"; print_r($opts[1]); exit;
+            if($model->save()){
+                foreach($opts as $k => $opt){
+                    $option = new Options();
+                    $option->name = strval($opt);
+                    if($k == $mypost['select']){
+                        $option->is_correct = 1;
+                    }else{
+                        $option->is_correct = 0;
+                    }
+                    $option->save();
+                    // print_r($opt->getErrors()); exit;
+                }
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'oarr' => $oarr,
         ]);
     }
 

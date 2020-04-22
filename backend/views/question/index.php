@@ -70,11 +70,6 @@ $this->params['breadcrumbs'][] = $this->title;
 								'name',
 								//'description:ntext',
 								
-								[
-									'attribute' => 'description',
-									'value' => 'description',
-									'contentOptions' => ['style' => 'max-width:400px; white-space: normal;'],
-								],
 								//'status',
 								//'created_at',
 								//'updated_at',
