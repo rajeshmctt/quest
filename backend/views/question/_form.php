@@ -49,8 +49,6 @@ use backend\models\enums\DirectoryTypes;
                                         <label class="control-label">Question Name</label>
                                         <?= $form->field($model, 'name')->textInput()->label(false) ?>										
                                     </div>
-                                </div>  
-                                <div class=" form-group row"><!-- form-material-->
                                     <div class="col-sm-6">
                                         <label class="control-label">Questionnaire</label>
                                         <?= $form->field($model, 'questionnaire_id')->label(false)->widget(Select2::classname(), [
@@ -67,7 +65,7 @@ use backend\models\enums\DirectoryTypes;
 											],
 										]);?>
                                     </div>
-                                </div>                              
+                                </div>                            
                                 <div class=" form-group row"><!-- form-material-->
                                     <div class="col-sm-6">
                                         <label class="control-label">Options (Select the correct answer)</label><br>

@@ -123,10 +123,25 @@ class QuestionController extends Controller
             $mypost = Yii::$app->request->post();
             $opts = $mypost['Option'];
             // echo "<pre>"; print_r($opts[1]); exit;
+            $optso = Options::find()->where(['question_id'=>$id])->all();
+            $oarr2 = []; 
+            foreach($optso as $opto){
+                $oarr2[] = $opto->id;
+            }
+            // echo "<pre>"; print_r($oarr2); exit;
+            
             if($model->save()){
+                $cnt = 0;
                 foreach($opts as $k => $opt){
-                    $option = new Options();
+                    $option = [];
+                    if(count($oarr2)!=0){
+                        $option = Options::find()->where(['id'=>$oarr2[$cnt]])->one();
+                    }
+                    if(count($option)==0){
+                        $option = new Options();
+                    }
                     $option->name = strval($opt);
+                    $option->question_id = $model->id;
                     if($k == $mypost['select']){
                         $option->is_correct = 1;
                     }else{
@@ -134,9 +149,10 @@ class QuestionController extends Controller
                     }
                     $option->save();
                     // print_r($opt->getErrors()); exit;
+                    $cnt++;
                 }
             }
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [

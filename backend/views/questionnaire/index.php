@@ -75,6 +75,11 @@ $this->params['breadcrumbs'][] = $this->title;
 									'value' => 'description',
 									'contentOptions' => ['style' => 'max-width:400px; white-space: normal;'],
 								],
+                                [
+                                    'attribute' => 'category_id',
+                                    'label'=>'Category',
+                                    'value' =>  'category.name',
+                                ],
 								//'status',
 								//'created_at',
 								//'updated_at',
@@ -84,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								//['class' => 'yii\grid\ActionColumn'],
 								[
 									'class' => 'yii\grid\ActionColumn',
-									'template' => '{update}&nbsp;{delete}',
+									// 'template' => '{update}&nbsp;{delete}',
 								],
 							],
 						]); ?>

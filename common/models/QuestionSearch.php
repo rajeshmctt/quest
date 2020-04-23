@@ -38,10 +38,12 @@ class QuestionSearch extends Question
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$qre_id='')
     {
         $query = Question::find();
-
+        if($qre_id != ''){
+            $query = Question::find()->where(['questionnaire_id'=>$qre_id]);
+        }
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

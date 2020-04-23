@@ -8,6 +8,7 @@ use common\models\QuestionnaireSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\QuestionSearch;
 
 /**
  * QuestionnaireController implements the CRUD actions for Questionnaire model.
@@ -52,7 +53,12 @@ class QuestionnaireController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new QuestionSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
+
         return $this->render('view', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
             'model' => $this->findModel($id),
         ]);
     }

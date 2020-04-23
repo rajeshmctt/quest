@@ -1,42 +1,153 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
+use yii\helpers\Url;
+use common\models\Category;
+use common\models\Options;
+use backend\models\enums\DirectoryTypes;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Questionnaire */
+/* @var $model common\models\Program */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Questionnaires', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+$this->title = 'View Questionnaire: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Questionnaire', 'url' => ['questionnaire/index']];
+//$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'View';
 ?>
-<div class="questionnaire-view">
+<div class="page">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+	<?php if(!Yii::$app->request->isAjax){?>
+		<div class="page-header">
+			<h1 class="page-title"><?= Html::encode($this->title) ?></h1>
+			<ol class="breadcrumb">
+				<li><a href="<?= Yii::$app->urlManager->createAbsoluteUrl("site/index");?>" data-link-to='site'>Home</a></li>
+				<?php foreach($this->params['breadcrumbs'] as $k=>$v){
+					if(isset($v['label'])){
+						echo "<li><a href=".Yii::$app->urlManager->createAbsoluteUrl($v['url'][0])." data-link-to='questionnaire-index'>".$v['label']."</a></li>";
+					}else{
+						echo "<li class='active'>$v</li>";
+					}
+				}?>
+			</ol>
+		</div>
+	<?php }?>
+    
+    
+<div class="page-content container-fluid">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="row row-lg">
+                    <div class="col-sm-10 col-md-offset-1">
+                        <!-- Example Basic Form -->
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+                        <div class="example-wrap">
+                            <div class="example">
+                                <!--<h3 class="example-theme">
+                                    Add Category
+                                </h3>-->
+                                <?php $form = ActiveForm::begin(['options' => ['data-link-to' => 'questionnaire-create']]); ?>
+                                
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label class="control-label">Questionnaire Name</label>
+                                        <?= $form->field($model, 'name')->textInput(['readonly'=>true])->label(false) ?>										
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label">Category</label>
+                                        <?= $form->field($model, 'category_id')->label(false)->widget(Select2::classname(), [
+											//'name' => 'User[location_id]',
+											//'id' => 'location', // location 6-4-18
+											//'value' => $location_name, // initial value
+											'data' => Category::getCategories(),
+											'options' => ['placeholder' => 'Select Category', 'id' => 'cate','disabled'=>true],
+											'pluginOptions' => [
+												'tags' => true,
+												'tokenSeparators' => [',', ' '],
+												// 'multiple'=>true, ,'multiple'=>true
+												'maximumInputLength' => 10
+											],
+										]);?>
+                                    </div>
+                                </div>                                
+                                <div class=" form-group row"><!-- form-material-->
+                                    <div class="col-sm-6">
+                                        <label class="control-label">Description</label>
+                                        <?= $form->field($model, 'description')->textArea(['readonly'=>true])->label(false) ?>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <!--<?//= Html::submitButton($model->isNewRecord?'Add':'Update', ['class' => 'btn btn-success pull-right btn_prog']) ?>-->
+                                        <br><br><?= Html::a('Update', ['questionnaire/update','id'=>$model->id], ['class' => 'btn btn-success pull-right']) ?>
+                                    </div>
+                                </div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'name',
-            'description:ntext',
-            'category_id',
-            'status',
-            'created_at',
-            'updated_at',
-        ],
-    ]) ?>
+                                <!--<div class="form-group form-material">
+                                <?//= Html::a('Update', ['questionnaire/update','id'=>$model->id], ['class' => 'btn btn-success']) ?>
+                                </div>-->
+                                <!--<?//php ActiveForm::end(); ?>-->
+                            </div>
+                        </div>
+                        <!-- End Example Basic Form -->
+                <?php ActiveForm::end(); ?>
+
+
+                    </div>
+
+                    
+                </div>
+            </div>
+            
+<!--start 123-->
+<div class="panel-body">
+<?php
+                        $array = [
+                            ['id' => 10, 'name' => 'Active'],
+                            ['id' => 0, 'name' => 'Inactive'],
+                        ];
+                        ?>
+						<div class="table-responsive">
+						<?= GridView::widget([
+							'dataProvider' => $dataProvider,
+							// 'filterModel' => $searchModel,
+							'columns' => [
+								['class' => 'yii\grid\SerialColumn'],
+
+								//'id',
+								'name',
+								//'description:ntext',
+                                [
+                                    'format'=>'raw',
+                                    'label'=>'Options',
+                                    'value'=>function($data){
+                                        $opts = Options::find()->where(['question_id'=>$data->id])->all();
+                                        $ostr = '';
+                                        foreach($opts as $opt){
+                                            $chk = 0;
+                                            if($opt->is_correct == 1){
+                                                $chk = 'checked';
+                                            }
+                                            if($ostr == ''){
+                                                $ostr = "<input type='radio' disabled='disabled' $chk/>".$opt->name;
+                                            }else{
+                                                $ostr = $ostr."<br><input type='radio' disabled='disabled' $chk/>".$opt->name;
+                                            }
+                                        }
+                                        return $ostr;
+                                    }
+                                ],
+								//['class' => 'yii\grid\ActionColumn'],
+								[
+									'class' => 'yii\grid\ActionColumn',
+									'template' => '{update}&nbsp;{delete}',
+								],
+							],
+						]); ?>
+                        </div>
+                    </div>
+<!--end 123-->
+        </div>
+    </div>
 
 </div>

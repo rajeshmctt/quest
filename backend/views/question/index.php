@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\Options;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ProgramSearch */
@@ -68,6 +69,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
 								//'id',
 								'name',
+                                [
+                                    'format'=>'raw',
+                                    'label'=>'Options',
+                                    'value'=>function($data){
+                                        $opts = Options::find()->where(['question_id'=>$data->id])->all();
+                                        $ostr = '';
+                                        foreach($opts as $opt){
+                                            $chk = 0;
+                                            if($opt->is_correct == 1){
+                                                $chk = 'checked';
+                                            }
+                                            if($ostr == ''){
+                                                $ostr = "<input type='radio' disabled='disabled' $chk/>".$opt->name;
+                                            }else{
+                                                $ostr = $ostr."<br><input type='radio' disabled='disabled' $chk/>".$opt->name;
+                                            }
+                                        }
+                                        return $ostr;
+                                    }
+                                ],
 								//'description:ntext',
 								
 								//'status',
