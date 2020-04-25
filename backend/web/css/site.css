@@ -357,6 +357,16 @@ td.org-dis
 	padding: 0 3px 0 3px;
 	font-style: italic;
 }
+.incardasm{
+	background-color:#eeeeee !important;
+	padding:7px;
+	/* height:140px; */
+	height:95px;
+	/* height:100%; */
+	margin:5px;
+	/* border: 1px solid #bbb; */
+    /* border-radius: 10px; */
+}
 .rescard3a {
     font-weight: 300;
     font-stretch: condensed;

@@ -78,12 +78,16 @@ class QuestionnaireController extends Controller
 		
         $searchModel = new QuestionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
+		$qkey =[];
+		foreach($dataProvider->getModels() as $dp){
+			$qkey[] = $dp->id;
+		}
 				
         // if ($model->load(Yii::$app->request->post())) {
         if (Yii::$app->request->post()) {
 			$array = Yii::$app->request->post();
-			$answers = $array['AssessmentAnswers'];
-			// echo "<pre>"; print_r($answers); exit;
+			// $answers = $array['AssessmentAnswers'];
+			echo "<pre>"; print_r($array); exit;
 			foreach($answers as $key=>$val){
 				// echo $key.'  ';
 				$model = $this->findModel($key);
@@ -113,7 +117,7 @@ class QuestionnaireController extends Controller
             'model' => $model,
             // 'asm' => isset($asm->name)?$asm->name:'',
             // 'aid' => $aid,
-            // 'qkey' => $qkey,
+            'qkey' => $qkey,
         ]);
     }
 

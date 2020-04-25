@@ -51,14 +51,6 @@ use backend\models\enums\DirectoryTypes;
                                         <label class="control-label">Questionnaire Name</label>
                                         <?= $form->field($model, 'name')->textInput()->label(false) ?>										
                                     </div>
-                                </div>                                
-                                <div class=" form-group row"><!-- form-material-->
-                                    <div class="col-sm-6">
-                                        <label class="control-label">Description</label>
-                                        <?= $form->field($model, 'description')->textArea()->label(false) ?>
-                                    </div>
-                                </div>
-                                <div class=" form-group row"><!-- form-material-->
                                     <div class="col-sm-6">
                                         <label class="control-label">Category</label>
                                         <?= $form->field($model, 'category_id')->label(false)->widget(Select2::classname(), [
@@ -74,6 +66,12 @@ use backend\models\enums\DirectoryTypes;
 												'maximumInputLength' => 10
 											],
 										]);?>
+                                    </div>
+                                </div>                                
+                                <div class=" form-group row"><!-- form-material-->
+                                    <div class="col-sm-6">
+                                        <label class="control-label">Description</label>
+                                        <?= $form->field($model, 'description')->textArea()->label(false) ?>
                                     </div>
                                 </div>
 

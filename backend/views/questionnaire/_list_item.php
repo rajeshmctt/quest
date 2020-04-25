@@ -35,21 +35,22 @@ $arr = [];
 		<div class="row tp_res" >
 			<div class="col-xs-8" >
 				<!--<span><?=$model_name ?></span><br>-->
-				<h5><?/*php foreach($qkey as $k=>$val){
+				<h5><?php foreach($qkey as $k=>$val){
 						if($val == $key)
 							echo $k+1 .". ";
 					}
-				*/?>
-				 <?=$model_name." ".$key ?></h5>
+				?>
+				 <?=$model_name ?></h5>
 					<?php 
-					$ans = '';		
-					/*foreach($model->assessmentAnswers as $aa){
-						if($aa->assessment_id == $model->assessment_id){
-							$ans = $aa->answer;
-							// echo $model->question_id;
-						}
-					}
-					*/?>
+					$ans = '';
+					// echo "<pre>"; print_r($model->options); exit;		
+					foreach($model->options as $opt){?>
+						<input type="radio" id="o<?=$opt->id?>" name="<?=$model->id?>" value="<?=$opt->name?>" >
+						<label for="o<?=$opt->id?>">
+							<?= $opt->name ?>
+						</label>
+					<?php }
+					?>
 					<?php if(1){
 						if($model->status == 1){?>
 							<div class="answer"><?php  //style="width:450px;"

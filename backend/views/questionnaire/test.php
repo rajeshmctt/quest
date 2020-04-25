@@ -48,13 +48,15 @@ $this->params['breadcrumbs'][] = $this->title;
 								<div class="form-inline padding-bottom-15">
 									<div class="row">
 										<div class="col-sm-4">
-											<p><b>Client Name: </b><?//=$model->user->first_name.' '.$model->user->last_name?></p>
+											<p><b>Assessment: </b><?=$model->name?></p>
 										</div>
 										<div class="col-sm-4">
-											<p><b>Due Date: </b><?//=date('d-M-Y',$model->due_date)?></p>
+											<p><b>Category: </b><?=$model->category->name?></p>
 										</div>
-										<div class="col-sm-4">
-											<p><b>Status: </b><?//=$model->status==AssessmentQuestions::STATUS_ACTIVE?'Pending':'Completed' ?></p>
+									</div>
+									<div class="row">
+										<div class="col-sm-8">
+											<p><b>Description: </b><?=$model->description ?></p>
 										</div>
 									</div>
 									<div class="row row-lg">
@@ -103,8 +105,8 @@ $this->params['breadcrumbs'][] = $this->title;
 									'tag' => 'div',
 								],
 								'dataProvider' => $dataProvider,
-								'itemView' => function ($model, $key, $index, $widget) {  //use($qkey) 
-									$itemContent = $this->render('_list_item',['model' => $model,'key'=>$key]); //,'qkey'=>$qkey
+								'itemView' => function ($model, $key, $index, $widget) use($qkey) {   
+									$itemContent = $this->render('_list_item',['model' => $model,'key'=>$key,'qkey'=>$qkey]); //
 
 									/* Display an Advertisement after the first list item */
 									
