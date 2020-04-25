@@ -64,6 +64,60 @@ class QuestionnaireController extends Controller
     }
 
     /**
+     * Lists all AssessmentQuestionsAsm models.
+     * @return mixed
+     */
+    public function actionTest($id='')
+    {
+        // echo $aid; exit;
+        $model = $this->findModel($id);
+		$aid = isset($asm->id)?$asm->id:0;
+		// $asm->name = "test";
+		// $asm = Assessment::find()->where(['id'=>$aid])->one();
+		// echo "asasasasas ".$aid; exit;
+		
+        $searchModel = new QuestionSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
+				
+        // if ($model->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->post()) {
+			$array = Yii::$app->request->post();
+			$answers = $array['AssessmentAnswers'];
+			// echo "<pre>"; print_r($answers); exit;
+			foreach($answers as $key=>$val){
+				// echo $key.'  ';
+				$model = $this->findModel($key);
+				$aa_model = new AssessmentAnswers();
+				$aa_model->aq_id = $key;
+				$aa_model->answer = $val;
+				$aa_model->user_id = Yii::$app->user->identity->id;
+				$aa_model->assessment_id = $aid;
+				// $aa_model->assessor_id = Yii::$app->user->identity->id;
+				// echo "<pre>"; print_r($aa_model); exit;
+				$aa_model->save();
+				// echo "<pre>"; print_r($aa_model->getErrors()); exit;
+			}
+			
+			// echo "<pre>"; print_r($answers); exit;
+			$asm->fill_self = 1; 
+			$asm->save();
+			
+			if($model->save()){
+				return $this->redirect(['view-asm', 'aid' => $aid]);
+			}
+        }
+		
+        return $this->render('test', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+            // 'asm' => isset($asm->name)?$asm->name:'',
+            // 'aid' => $aid,
+            // 'qkey' => $qkey,
+        ]);
+    }
+
+    /**
      * Creates a new Questionnaire model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
