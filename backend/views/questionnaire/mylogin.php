@@ -100,50 +100,35 @@ $this->params['breadcrumbs'][] = $this->title;
 								</div>
 					
 					<?php $form = ActiveForm::begin(['options' => ['data-link-to' => 'assessment-answers-create']]); ?>
-					<?= ListView::widget([
-								'options' => [
-									'tag' => 'div',
-								],
-								'dataProvider' => $dataProvider,
-								'itemView' => function ($model, $key, $index, $widget) use($qkey) {   
-									$itemContent = $this->render('_list_item',['model' => $model,'key'=>$key,'qkey'=>$qkey]); //
-
-									/* Display an Advertisement after the first list item */
-									
-									// echo "<pre>"; print_r($itemContent); exit;
-									return $itemContent;
-								},
-								'itemOptions' => [
-									'tag' => false,
-								],
-								'summary' => '',
-								
-								/* do not display {summary} */
-								'layout' => '{items}{pager}',
-
-								'pager' => [
-									'firstPageLabel' => 'First',
-									'lastPageLabel' => 'Last',
-									'maxButtonCount' => 4,
-									'options' => [
-										'class' => 'pagination col-xs-12'
-									]
-								],
-
-							]);
-							?>
+					
+                        <div class="form-group  row">
+                            <div class="col-sm-6">
+                                <label class="control-label">Name</label>
+                                <?= $form->field($user, 'username')->textInput()->label(false) ?>
+                            </div>
+                        </div>
+                        <div class="form-group  row">
+                            <div class="col-sm-6">
+                                <label class="control-label">Email</label>
+                                <?= $form->field($user, 'email')->textInput()->label(false) ?>
+                            </div>
+                        </div>
 						<div class="form-group form-material">
-							<?= Html::submitButton('Submit', ['class' => 'btn btn-success pull-right']) ?>
+							<?= Html::submitButton('Start Questionnaire', ['class' => 'btn btn-success pull-right']) ?>
 							<!--<?= Html::submitButton((isset($model->id)?'Update':'Add'), ['class' => 'btn btn-success pull-right']) ?>-->
 						</div>
 						<?php ActiveForm::end(); ?>
 
 						</div>
+                        <div class="alert alert-danger" role="alert" style="display:<?=$nouser?"":"none"?>">
+                        This participant is not authorized for this test.
+                        </div>
                         </div>
                         </div>
 						<?php } ?>
                         </div>
                     </div>
+                    
                     <!-- End Panel Add &amp; Remove Rows -->
                 </div>
             </div>

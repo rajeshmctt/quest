@@ -4,13 +4,12 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Question;
-use yii\db\Expression;
+use common\models\Answers;
 
 /**
- * QuestionSearch represents the model behind the search form of `common\models\Question`.
+ * AnswersSearch represents the model behind the search form of `common\models\Answers`.
  */
-class QuestionSearch extends Question
+class AnswersSearch extends Answers
 {
     /**
      * {@inheritdoc}
@@ -18,7 +17,7 @@ class QuestionSearch extends Question
     public function rules()
     {
         return [
-            [['id', 'questionnaire_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'question_id', 'option_id', 'user_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -39,24 +38,14 @@ class QuestionSearch extends Question
      *
      * @return ActiveDataProvider
      */
-    public function search($params,$qre_id='',$r20='') //Random 20 = false by default // true
+    public function search($params)
     {
-        $query = Question::find();
-        if($qre_id != ''){
-			// echo 123; exit;
-            $query = Question::find()->where(['questionnaire_id'=>$qre_id]); //->orderBy(new Expression('rand()'))
-        }
-        // add conditions that should always apply here  ---- ->orderBy(new Expression('rand()'))->limit(10)
-		
-		// rdm 13may 20 random rec only 
-		// if($r20){  
- 			// $query->orderBy(new Expression('rand()'))->limit(20);
-		// }
-		
-		// echo "<pre>"; print_r(count($query->all())); exit;
+        $query = Answers::find()->where(['answers.status'=>10,'user.status'=>10,'question.questionnaire_id'=>5])->joinWith('user')->joinWith('question');
+
+        // add conditions that should always apply here
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-			'pagination' => false, // pagination false rdm 13may
         ]);
 
         $this->load($params);
@@ -70,7 +59,9 @@ class QuestionSearch extends Question
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'questionnaire_id' => $this->questionnaire_id,
+            'question_id' => $this->question_id,
+            'option_id' => $this->option_id,
+            'user_id' => $this->user_id,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

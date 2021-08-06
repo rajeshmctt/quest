@@ -4,13 +4,12 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Question;
-use yii\db\Expression;
+use common\models\user;
 
 /**
- * QuestionSearch represents the model behind the search form of `common\models\Question`.
+ * UserSearch represents the model behind the search form of `common\models\user`.
  */
-class QuestionSearch extends Question
+class UserSearch extends user
 {
     /**
      * {@inheritdoc}
@@ -18,8 +17,8 @@ class QuestionSearch extends Question
     public function rules()
     {
         return [
-            [['id', 'questionnaire_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'role', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'first_name', 'last_name', 'verification_token'], 'safe'],
         ];
     }
 
@@ -39,24 +38,14 @@ class QuestionSearch extends Question
      *
      * @return ActiveDataProvider
      */
-    public function search($params,$qre_id='',$r20='') //Random 20 = false by default // true
+    public function search($params,$type="")
     {
-        $query = Question::find();
-        if($qre_id != ''){
-			// echo 123; exit;
-            $query = Question::find()->where(['questionnaire_id'=>$qre_id]); //->orderBy(new Expression('rand()'))
-        }
-        // add conditions that should always apply here  ---- ->orderBy(new Expression('rand()'))->limit(10)
-		
-		// rdm 13may 20 random rec only 
-		// if($r20){  
- 			// $query->orderBy(new Expression('rand()'))->limit(20);
-		// }
-		
-		// echo "<pre>"; print_r(count($query->all())); exit;
+        $query = user::find()->where(['role' => $type,'status'=>10]);
+
+        // add conditions that should always apply here
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-			'pagination' => false, // pagination false rdm 13may
         ]);
 
         $this->load($params);
@@ -70,13 +59,20 @@ class QuestionSearch extends Question
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'questionnaire_id' => $this->questionnaire_id,
+            'role' => $this->role,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
+            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
+            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'first_name', $this->first_name])
+            ->andFilterWhere(['like', 'last_name', $this->last_name])
+            ->andFilterWhere(['like', 'verification_token', $this->verification_token]);
 
         return $dataProvider;
     }

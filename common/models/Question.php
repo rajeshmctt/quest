@@ -10,11 +10,13 @@ use Yii;
  *
  * @property int $id
  * @property string|null $name
+* @property string|null $section 
  * @property int|null $questionnaire_id
  * @property int|null $status
  * @property int|null $created_at
  * @property int|null $updated_at
  *
+* @property Answers[] $answers 
  * @property Options[] $options
  * @property Questionnaire $questionnaire
  */
@@ -44,8 +46,9 @@ class Question extends \yii\db\ActiveRecord
     {
         return [
 			['status', 'default', 'value' => self::STATUS_ACTIVE],
+			[['name', 'section'], 'string'],
             [['questionnaire_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [['name'], 'string'],
             [['questionnaire_id'], 'exist', 'skipOnError' => true, 'targetClass' => Questionnaire::className(), 'targetAttribute' => ['questionnaire_id' => 'id']],
         ];
     }
@@ -58,6 +61,7 @@ class Question extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+           'section' => 'Section', 
             'questionnaire_id' => 'Questionnaire ID',
             'status' => 'Status',
             'created_at' => 'Created At',
@@ -84,4 +88,14 @@ class Question extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Questionnaire::className(), ['id' => 'questionnaire_id']);
     }
+ 
+   /** 
+    * Gets query for [[Answers]]. 
+    * 
+    * @return \yii\db\ActiveQuery 
+    */ 
+   public function getAnswers() 
+   { 
+       return $this->hasMany(Answers::className(), ['question_id' => 'id']); 
+   }
 }

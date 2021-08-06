@@ -33,22 +33,49 @@ $arr = [];
 	
 	<div class="incardasm"> <!--incardasn-->
 		<div class="row tp_res" >
-			<div class="col-xs-8" >
+			<div class="col-xs-12" >
 				<!--<span><?=$model_name ?></span><br>-->
-				<h5><?php foreach($qkey as $k=>$val){
-						if($val == $key)
+				<h5><?php 
+				$abc = '';
+				foreach($qkey as $k=>$val){
+						if($val == $key){
 							echo $k+1 .". ";
+							$abc = $akey[$val];
+						}
 					}
 				?>
-				 <?=$model_name ?></h5>
+				 <?=$model_name ?></h5><!--." ".$abc-->
 					<?php 
 					$ans = '';
-					// echo "<pre>"; print_r($model->options); exit;		
+					// echo "<pre>"; print_r($model->options); exit;		  // $opt->is_correct?'checked':''
 					foreach($model->options as $opt){?>
-						<input type="radio" id="o<?=$opt->id?>" name="<?=$model->id?>" value="<?=$opt->id?>" >
-						<label for="o<?=$opt->id?>">
-							<?= $opt->name ?>
-						</label><br>
+						<input type="radio" id="o<?=$opt->id?>" name="<?=$model->id?>" value="<?=$opt->id?>" <?=($abc==$opt->id)?'checked':'' ?> disabled>
+						<!--CORRECT ANSWER-->
+						<?php if($abc==$opt->id && $opt->is_correct){?>
+							<label for="o<?=$opt->id?>" class="text-success">
+								<?= $opt->name ?>
+								<span class="glyphicon glyphicon-ok "></span>
+							</label><br>
+						<?php } ?>
+						<!--WRONG ANSWER-->
+						<?php if($abc==$opt->id && $opt->is_correct!=1){?>
+							<label for="o<?=$opt->id?>" class="text-danger">
+								<?= $opt->name ?>
+								<span class="glyphicon glyphicon-remove "></span>
+							</label><br>
+						<!--OTHER OPTIONS-->
+						<?php }
+						if($abc!=$opt->id && $opt->is_correct){?>
+							<label for="o<?=$opt->id?>" class="text-success">
+								<?= $opt->name ?>
+								<span class="glyphicon glyphicon-ok "></span>
+							</label><br>
+						<?php } ?>
+						<?php if($abc!=$opt->id && $opt->is_correct!=1){?>
+							<label for="o<?=$opt->id?>">
+								<?= $opt->name ?>
+							</label><br>
+						<?php } ?>
 					<?php }
 					?>
 					<?php if(1){
@@ -65,8 +92,8 @@ $arr = [];
 						}
 					} ?>
 			</div>
-		</div>
-		<!--<br><div class="row tp_res" >
+		</div><!--<br>
+		<div class="row tp_res" >
 			
 		</div><br>-->
 	</div>

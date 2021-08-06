@@ -109,10 +109,10 @@ $this->title = 'LMS Quest';
                                                 class="icon md-graduation-cap" aria-hidden="true"></i></div><!--md-balance-->
                                         <div class="counter counter-md counter-inverse text-left">
                                             <div class="counter-number-group">
-                                                <span class="counter-number"><?= "$ program_count" ?></span>
-                                                <span class="counter-number-related text-capitalize">Programs</span>
+                                                <!--<span class="counter-number"><?= "$ program_count" ?></span>
+                                                <span class="counter-number-related text-capitalize">Categories</span>-->
                                             </div>
-                                            <div class="counter-label text-capitalize"><a class="link-theme" href="<?= Yii::$app->urlManager->createAbsoluteUrl("program/index"); ?>"> Manage Programs</a></div>
+                                            <div class="counter-label text-capitalize"><a class="link-theme" href="<?= Yii::$app->urlManager->createAbsoluteUrl("category/index"); ?>"> Manage Category</a></div>
 
                                         </div>
                                     </div>
@@ -126,12 +126,12 @@ $this->title = 'LMS Quest';
                                                 class="icon md-group-work" aria-hidden="true"></i></div>
                                         <div class="counter counter-md counter-inverse text-left">
                                             <div class="counter-number-group">
-                                                <span class="counter-number"><?= "$ batch_count" ?></span>
-                                                <span class="counter-number-related text-capitalize">Batches</span>
+                                                <!--<span class="counter-number"><?= "$ batch_count" ?></span>
+                                                <span class="counter-number-related text-capitalize">Questionnaires</span>-->
                                             </div>
                                             <div class="counter-label text-capitalize"><a class="link-theme"
-                                                                                          href="<?= Yii::$app->urlManager->createAbsoluteUrl(["batches/index","type"=>UserTypes::PARTICIPANT]); ?>">
-                                                    Manage Batches</a></div>
+                                                                                          href="<?= Yii::$app->urlManager->createAbsoluteUrl(["questionnaire/index"]); ?>">
+                                                    Manage Questionnaires</a></div>
 
                                         </div>
                                     </div>
@@ -145,11 +145,11 @@ $this->title = 'LMS Quest';
                                                 class="icon md-accounts" aria-hidden="true"></i></div>
                                         <div class="counter counter-md counter-inverse text-left">
                                             <div class="counter-number-group">
-                                                <span class="counter-number"><?= "$ participant_count" ?></span>
-                                                <span class="counter-number-related text-capitalize">Participants</span>
+                                                <!--<span class="counter-number"><?= "$ participant_count" ?></span>
+                                                <span class="counter-number-related text-capitalize">Questions</span>-->
                                             </div>
                                             <div class="counter-label text-capitalize">
-												<a class="link-theme" href="<?= Yii::$app->urlManager->createAbsoluteUrl(["user/index","type"=>UserTypes::PARTICIPANT]); ?>">Manage Participants</a>
+												<a class="link-theme" href="<?= Yii::$app->urlManager->createAbsoluteUrl(["question/index"]); ?>">Manage Questions</a>
 											</div>
                                         </div>
                                     </div>
@@ -163,11 +163,11 @@ $this->title = 'LMS Quest';
                                                 class="icon md-collection-text" aria-hidden="true"></i></div>
                                         <div class="counter counter-md counter-inverse text-left">
                                             <div class="counter-number-group">
-                                                <span class="counter-number"><?= "$ faculty_count" ?></span>
-                                                <span class="counter-number-related text-capitalize">Faculty</span>
+                                               <!-- <span class="counter-number"><?= "$ faculty_count" ?></span>
+                                                <span class="counter-number-related text-capitalize">Participants</span>-->
                                             </div>
                                             <div class="counter-label text-capitalize">
-												<a class="link-theme" href="<?= Yii::$app->urlManager->createAbsoluteUrl(["user/index","type"=>UserTypes::FACULTY]); ?>">Manage Faculty</a>
+												<a class="link-theme" href="<?= Yii::$app->urlManager->createAbsoluteUrl(["user/index","type"=>UserTypes::PARTICIPANT]); ?>">Manage Participants</a>
 											</div>
                                         </div>
                                     </div>
@@ -251,30 +251,7 @@ $this->title = 'LMS Quest';
                                                             <div class="counter-number-group">
                                                                 <span class="counter-number-related text-capitalize indb">Your Programs</span>
                                                             </div>
-                                                            <div class="counter-label text-capitalize"><!-- row--><!--mycontent-right-->
-                                                                <?php  foreach($batches as $batch){ ?>
-                                                                <a class="" href="<?= Yii::$app->urlManager->createAbsoluteUrl(['program/user-view','id'=>$batch->id]); ?>" style="display:none">
-                                                                    <div class="card" style="width: 20rem;display:inline-block">
-                                                                        <img src="<?php echo ($batch->program->file_id != '') ? DirectoryTypes::getParticipantDirectory(true) . $batch->program->file->file_name : Url::to('@web/images/profile_pic.png', true); ?>" class="card-img-top" style="width:100%;" alt="...">
-                                                                        <div class="dash-prog-name card-body">
-                                                                            <span class="highlight strong" style="text-align:center !important; color:#000 !important"><?=$batch->program->name?></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                                
-                                                                <article style="float:left; margin:5px 5px 15px 5px">
-                                                                <a href="<?= Yii::$app->urlManager->createAbsoluteUrl(['program/user-view','id'=>$batch->id]); ?>" style="text-decoration:none;">
-                                                                    <div class="card" style="width: 20rem;display:inline-block;">
-                                                                        <div style="height:180px;width:180px;">
-                                                                            <img src="<?php echo ($batch->program->file_id != '') ? DirectoryTypes::getParticipantDirectory(true) . $batch->program->file->file_name : Url::to('@web/images/profile_pic.png', true); ?>" class="card-img-top" style="max-width:100%;max-height:100%; top:0px" alt="...">
-                                                                        </div>
-                                                                        <div class="dash-prog-name card-body" style="height:50px;width:180px;padding-top:10px">
-                                                                            <h5 class="card-title center" style="color:black !important; text-align:center !important"><?=$batch->program->name?></h5>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                                </article>
-                                                        <?php } ?>
+                                                            <div class="counter-label text-capitalize"><!-- row-->
                                                             </div>
 
                                                         </div>
@@ -292,30 +269,6 @@ $this->title = 'LMS Quest';
                                                                 <span class="counter-number-related text-capitalize indb">Programs you might be interested in</span>
                                                             </div>
                                                             <div class="counter-label text-capitalize">
-                                                                <?php  foreach($oth_p as $oth){ ?>
-                                                                <a href="https://coach-to-transformation.com/contact-us/" target="_blank" style="text-decoration:none;display:none">
-                                                                    <div class="card" style="width: 20rem;display:inline-block">
-                                                                        <div style="height:180px;width:180px">
-                                                                            <img src="<?php echo ($oth->file_id != '') ? DirectoryTypes::getParticipantDirectory(true) . $oth->file->file_name : Url::to('@web/images/profile_pic.png', true); ?>" class="card-img-top" style="max-width:100%;max-height:100%" alt="...">
-                                                                        </div>
-                                                                        <div class="dash-prog-name card-body" style="height:100px;width:180px">
-                                                                            <span class="highlight strong" style="text-align:center !important; color:#000 !important"><?=$oth->name?></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                                <article style="float:left; margin:5px 5px 15px 5px">
-                                                                <a href="https://coach-to-transformation.com/contact-us/" target="_blank" style="text-decoration:none;">
-                                                                    <div class="card" style="width: 20rem;display:inline-block;">
-                                                                        <div style="height:180px;width:180px;">
-                                                                            <img src="<?php echo ($oth->file_id != '') ? DirectoryTypes::getParticipantDirectory(true) . $oth->file->file_name : Url::to('@web/images/profile_pic.png', true); ?>" class="card-img-top" style="max-width:100%;max-height:100%; top:0px" alt="...">
-                                                                        </div>
-                                                                        <div class="dash-prog-name card-body" style="height:50px;width:180px;padding-top:10px">
-                                                                            <h5 class="card-title center" style="color:black !important; text-align:center !important"><?=$oth->name?></h5>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                                </article>
-                                                                <?php } ?>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -329,16 +282,6 @@ $this->title = 'LMS Quest';
                                             <div class="ann-cont">
                                                 <span class="indb">ANNOUNCEMENT</span><br>
                                                 <ul class="ann-ct">
-                                                <?php foreach($batches as $bat){
-												//echo $bat->id; 
-                                                $announce = Announcement::find()->joinWith('announcementBatches')->where(['announcement_batch.batch_id'=>$bat->id])->andWhere(['<','start_date',time()])->andWhere(['>','end_date',time()-(24*3600)])->all();
-                                                foreach($announce as $ann){ ?>
-                                                <li>
-                                                    <span class="ann-co"><?= $ann->announcement ?></span><br>
-                                                </li>
-                                                <?php } 
-                                                }
-                                                ?>
                                                     
                                                 </ul>
                                             </div>

@@ -57,14 +57,16 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            // [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            [['username', 'email'], 'required'],
            [['role', 'status', 'created_at', 'updated_at'], 'integer'],
            [['username', 'password_hash', 'password_reset_token', 'email', 'first_name', 'last_name', 'verification_token'], 'string', 'max' => 255],
            [['auth_key'], 'string', 'max' => 32],
            [['username'], 'unique'],
            [['email'], 'unique'],
+           [['email'], 'email'],
            [['password_reset_token'], 'unique'],
         ];
     }
@@ -76,7 +78,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
+            'username' => 'Name',
             'auth_key' => 'Auth Key',
             'password_hash' => 'Password Hash',
             'password_reset_token' => 'Password Reset Token',
@@ -96,7 +98,28 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        // return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        // new code RDM 3-6-20
+        $sess15 = Yii::$app->session;  // get email from session
+		$myemail = $sess15['email']; // get email from session 
+		$user_model = User::find()->where(['email'=>$myemail])->one();
+		
+		$id = isset($user_model)?$user_model->id:''; 
+		// echo $id; exit;
+		// if(isset($user_model)){
+				// echo "uy"; exit;
+				// $id = $user_model->id; 
+			// $user_model = User::findOne($id);
+		// echo "<pre>"; print_r($id); exit;
+			/*if($user_model->role != UserTypes::COACH) {
+				return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+			}
+		// }
+        else
+        {
+            return static::findOne($id);
+        }*/
+		return $user_model;
     }
 
     /**
@@ -260,5 +283,11 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    
+   public function getAnswers()
+    {
+        return $this->hasMany(Answers::className(), ['user_id' => 'id']);
     }
 }

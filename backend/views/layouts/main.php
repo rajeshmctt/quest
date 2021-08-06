@@ -427,6 +427,12 @@ AppAsset::register($this);
             </div>
         </div>
     </li>
+    <li class="site-menu-item">
+        <a href="<?= Yii::$app->urlManager->createAbsoluteUrl("user/part-report1"); ?>">
+            <i class="site-menu-icon md-home" aria-hidden="true"></i>
+            <span class="site-menu-title">Report</span>
+        </a>
+    </li>
 <?php } ?>
 
 <!--HIDE 21-4-20 RDM-->

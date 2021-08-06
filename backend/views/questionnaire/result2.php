@@ -11,13 +11,13 @@ use yii\widgets\ListView;
 /* @var $searchModel common\models\AssessmentQuestionsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = isset($model)?$model->name:'No active Assessment';//'Questions of Assessment: '.
+$this->title = isset($model)?$model->name:'No active Assessment';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="page assessment-index"><!-- program-index -->
-		<!--<div class="page-header">
+		<div class="page-header">
             <h1 class="page-title"><?= Html::encode($this->title) ?></h1>
-            <ol class="breadcrumb">
+            <!--<ol class="breadcrumb">
                 <li><a href="<?= Yii::$app->urlManager->createAbsoluteUrl("site/index"); ?>"
                        data-link-to="site">Home</a></li>
                 <?php foreach ($this->params['breadcrumbs'] as $k => $v) {
@@ -27,8 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         echo "<li class='active'>$v</li>";
                     }
                 }?>
-            </ol>
-        </div>-->
+            </ol>-->
+        </div>
 		<div class="page-content">
             <div class="row row-lg mgcut">
                 <div class="col-lg-12">
@@ -38,66 +38,34 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="panel-heading" id="exampleHeadingDefaultLevel" role="tab">
                          <a class="panel-title collapsed" id="panel-theme" data-toggle="collapse" href="#exampleCollapseDefaultLevel"
                                   data-parent="#exampleAccordionDefault" aria-expanded="true"
-                                  aria-controls="exampleCollapseDefaultLevel">
-								  <?= Html::encode($this->title) ?>
+                                  aria-controls="exampleCollapseDefaultLevel" style="text-align:center">
+                             Result 
                                 </a>
                         </div>
 						<div class="panel-collapse collapse in" id="exampleCollapseDefaultLevel" aria-labelledby="exampleHeadingDefaultLevel"
                     role="tabpanel">
 							<div class="panel-body">
 								<div class="form-inline padding-bottom-15">
-									<div class="row" style="display:none">
+									<!--<div class="row">
 										<div class="col-sm-4">
 											<p><b>Assessment: </b><?=$model->name?></p>
 										</div>
 										<div class="col-sm-4">
 											<p><b>Category: </b><?=$model->category->name?></p>
 										</div>
-									</div>
+									</div>-->
 									<div class="row">
-										<div class="col-sm-8">
-											<p><b>Description: </b><?=$model->description ?></p>
+										<div class="col-sm-12" style="text-align:center">
+											<h4>You scored <?= $acorr."/".count($qkey) ?> in your assessment.</h4>
 										</div>
 									</div>
 									<div class="row row-lg">
 										<div class="col-sm-10 col-md-offset-1">
-											<!-- Example Basic Form -->
-
-											<!--<div class="example-wrap">
-												<div class="example">
-												<?php $form = ActiveForm::begin(['options' => ['data-link-to' => 'faculty-create']]); ?>
-													
-													<div class="form-group  row">
-														<div class="col-sm-6">
-															<label class="control-label">Name</label>
-															<?= $form->field($model, 'name')->textInput()->label(false) ?>
-														</div>
-														<div class="col-sm-6">
-															<label class="control-label">Email</label>
-															<?= $form->field($model, 'status')->textInput(['maxlength' => true])->label(false) ?>
-														</div>
-													</div>
-													<div class="form-group  row">
-														<div class="col-sm-6">
-															<label class="control-label">Assessor Type</label>
-															
-														</div>
-														<div class="col-sm-6">
-															<label class="control-label">Invite Status</label>
-														</div>
-													</div>
-
-													<div class="form-group form-material">
-														<?= Html::submitButton((isset($model->id)?'Update':'Add'), ['class' => 'btn btn-success pull-right']) ?>
-													</div>
-													<?php ActiveForm::end(); ?>
-												
-												</div>
-											</div>-->
-											<!-- End Example Basic Form -->
+											
 										</div>
 									</div>
 								</div>
+					
 					
 					<?php $form = ActiveForm::begin(['options' => ['data-link-to' => 'assessment-answers-create']]); ?>
 					<?= ListView::widget([
@@ -105,8 +73,8 @@ $this->params['breadcrumbs'][] = $this->title;
 									'tag' => 'div',
 								],
 								'dataProvider' => $dataProvider,
-								'itemView' => function ($model, $key, $index, $widget) use($qkey) {   
-									$itemContent = $this->render('_list_item',['model' => $model,'key'=>$key,'qkey'=>$qkey]); //
+								'itemView' => function ($model, $key, $index, $widget) use($qkey,$akey) {   
+									$itemContent = $this->render('_list_res_item',['model' => $model,'key'=>$key,'qkey'=>$qkey,'akey'=>$akey]); //
 
 									/* Display an Advertisement after the first list item */
 									
@@ -133,10 +101,11 @@ $this->params['breadcrumbs'][] = $this->title;
 							]);
 							?>
 						<div class="form-group form-material">
-							<?= Html::submitButton('Submit', ['class' => 'btn btn-success pull-right']) ?>
+							<!--<?= Html::submitButton('Submit', ['class' => 'btn btn-success pull-right']) ?>-->
 							<!--<?= Html::submitButton((isset($model->id)?'Update':'Add'), ['class' => 'btn btn-success pull-right']) ?>-->
 						</div>
 						<?php ActiveForm::end(); ?>
+
 
 						</div>
                         </div>

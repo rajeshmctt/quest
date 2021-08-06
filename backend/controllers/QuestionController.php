@@ -9,6 +9,7 @@ use common\models\QuestionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * QuestionController implements the CRUD actions for Question model.
@@ -21,6 +22,18 @@ class QuestionController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => [
+                            'index','view','update','delete','create'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -86,7 +99,8 @@ class QuestionController extends Controller
                     // print_r($opt->getErrors()); exit;
                 }
             }
-            return $this->redirect(['view', 'id' => $model->id]);
+            // return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -112,7 +126,7 @@ class QuestionController extends Controller
             $oarr[$cnt]['is_correct'] = $opto->is_correct;
             $cnt++;
         }
-        if(count($oarr)==0){
+        if(count((array)$oarr)==0){
             for($i=1;$i<=4;$i++){
                 $oarr[$i]['name'] = '';
                 $oarr[$i]['is_correct'] = '';
@@ -134,10 +148,10 @@ class QuestionController extends Controller
                 $cnt = 0;
                 foreach($opts as $k => $opt){
                     $option = [];
-                    if(count($oarr2)!=0){
+                    if(count((array)$oarr2)!=0){
                         $option = Options::find()->where(['id'=>$oarr2[$cnt]])->one();
                     }
-                    if(count($option)==0){
+                    if(count((array)$option)==0){
                         $option = new Options();
                     }
                     $option->name = strval($opt);
@@ -152,7 +166,8 @@ class QuestionController extends Controller
                     $cnt++;
                 }
             }
-            return $this->redirect(['index']);
+            // return $this->redirect(['index']);
+            return $this->redirect(['questionnaire/view','id'=>$model->questionnaire_id]);
         }
 
         return $this->render('update', [

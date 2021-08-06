@@ -83,16 +83,25 @@ $this->params['breadcrumbs'][] = 'View';
                                     </div>
                                 </div>
 
-                                <!--<div class="form-group form-material">
-                                <?//= Html::a('Update', ['questionnaire/update','id'=>$model->id], ['class' => 'btn btn-success']) ?>
-                                </div>-->
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                <!--<?//= Html::a('Update', ['questionnaire/update','id'=>$model->id], ['class' => 'btn btn-success']) ?>-->
+                                    
+                                        <label class="control-label">Test Link</label>
+                                        <div class="form-group field-questionnaire-name has-success">
+                                            <input type="text" id="myInput" class="form-control" name="Questionnaire[link]" value="<?= Yii::$app->urlManager->createAbsoluteUrl(["questionnaire/my-login","id"=>base64_encode($model->id)]);?>" readonly="" aria-invalid="false">
+                                            <div class="help-block"></div>
+                                        </div>	
+                                    </div>
+
+                                </div>
                                 <!--<?//php ActiveForm::end(); ?>-->
                             </div>
                         </div>
                         <!-- End Example Basic Form -->
                 <?php ActiveForm::end(); ?>
 
-
+                                                    
                     </div>
 
                     
@@ -115,7 +124,12 @@ $this->params['breadcrumbs'][] = 'View';
 								['class' => 'yii\grid\SerialColumn'],
 
 								//'id',
-								'name',
+								// 'name',
+								[
+									'attribute' => 'name',
+									// 'value' => 'description',
+									'contentOptions' => ['style' => 'width:35%; white-space: normal;'],
+								],
 								//'description:ntext',
                                 [
                                     'format'=>'raw',
@@ -135,12 +149,31 @@ $this->params['breadcrumbs'][] = 'View';
                                             }
                                         }
                                         return $ostr;
-                                    }
+                                    },
+									'contentOptions' => ['style' => 'width:35%; white-space: normal;'],
                                 ],
+								[
+									'attribute' => 'section',
+									// 'value' => 'description',
+									'contentOptions' => ['style' => 'width:15%; white-space: normal;'],
+								],
 								//['class' => 'yii\grid\ActionColumn'],
 								[
 									'class' => 'yii\grid\ActionColumn',
 									'template' => '{update}&nbsp;{delete}',
+
+									'buttons' => [
+										'update' => function ($url, $model) {
+											return Html::a('<span class="icon md-edit"></span>', Yii::$app->getUrlManager()->createUrl(['/question/update', 'id' => $model->id]), [
+												'title' => Yii::t('yii', 'View'),
+												'data' => [
+													'link-to' => 'user-view',
+													// 'url' => Yii::$app->getUrlManager()->createUrl(['/user-assignment/index-for-assn', 'assn' => $model->id]),
+													// 'no-link' => "true",
+												],
+											]);
+										},
+									],
 								],
 							],
 						]); ?>
