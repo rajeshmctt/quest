@@ -86,7 +86,7 @@ if(Yii::$app->user->identity->role == UserTypes::SUPER_ADMIN) {
 											$corr = 0;
 											$tot = 0;
 											foreach($data->answers as $ans){
-												if($ans->question->questionnaire_id == 5){
+												if($ans->question->questionnaire_id == 5 && $ans->status == 10){
 													if($ans->option->is_correct){
 														$corr++;
 													}
@@ -109,14 +109,14 @@ if(Yii::$app->user->identity->role == UserTypes::SUPER_ADMIN) {
 											$corr = 0;
 											$tot = 0;
 											foreach($data->answers as $ans){
-												if($ans->question->questionnaire_id == 5){
+												if($ans->question->questionnaire_id == 5 && $ans->status == 10){
 													if($ans->option->is_correct){
 														$corr++;
 													}
 													$tot++;
 												}
 											}
-											return ($tot==0)?"0%":(100 * $corr/$tot)."%";
+											return ($tot==0)?"0%":ceil(100 * $corr/$tot)."%";
 										}
 									],
                                 ];
