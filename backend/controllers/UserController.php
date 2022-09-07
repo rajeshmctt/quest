@@ -452,13 +452,17 @@ class UserController extends Controller
             $password = $model->password_hash;
             $model->setPassword($model->password_hash);
             $model->generateAuthKey();
+			
 			if($model->save()){
 				// echo "yes"; exit;
+				Yii::$app->getSession()->setFlash('success', 'User is added successfully');
 			}else{
 				// echo "<pre>"; print_r($model->getErrors()); exit;
+				Yii::$app->getSession()->setFlash('error', 'Name should be unique');	
 			}
             // return $this->redirect(['view', 'id' => $model->id]);
-            return $this->redirect(['index', 'type' => 5]);
+            // return $this->redirect(['index', 'type' => 5]);
+            return $this->redirect(['create-participant']);
         }
 
         return $this->render('create', [

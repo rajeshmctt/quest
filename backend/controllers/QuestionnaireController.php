@@ -171,7 +171,19 @@ class QuestionnaireController extends Controller
                 $par = base64_encode($umodel->id); 
 				return $this->redirect(['my-test','id'=>$id,'par'=>$par]);
             }else{
-                $nouser = 1;
+                // $nouser = 1;	
+				$user->username = $user->username.rand(1,1000);	
+				// $model->email = $user->email;			
+				// $password = $model->password_hash;
+				$user->setPassword(12345);//$model->password_hash
+				$user->generateAuthKey();
+				if($user->save()){
+                    
+                }else{
+                    echo "<pre>"; print_r($user->getErrors());exit;
+                }
+                $par = base64_encode(isset($umodel->id)?$umodel->id:$user->id); 
+				return $this->redirect(['my-test','id'=>$id,'par'=>$par]);
             }
         }
         return $this->render('mylogin', [

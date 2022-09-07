@@ -284,7 +284,9 @@ function showTab(n) {
 	   document.getElementById("js-submit-form").style.display = "inline";
   } else {
 	  console.log("no");
-    document.getElementById("nextBtn").innerHTML = "Next";
+		document.getElementById("nextBtn").innerHTML = "Next";
+	  document.getElementById("nextBtn").style.display = "inline";
+	   document.getElementById("js-submit-form").style.display = "none";
   }
   //... and run a function that will display the correct step indicator:
   fixStepIndicator(n)

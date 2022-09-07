@@ -206,7 +206,7 @@ AppAsset::register($this);
     <ul class="site-menu">
         <li>
             <a href="<?= Yii::$app->urlManager->createAbsoluteUrl("site/index"); ?>" style="position:relative">
-                <img src="<?php echo Url::to('@web/img/group-271.jpg', true); ?>" srcset="img/group-271@2x.jpg 2x, img/group-271@3x.jpg 3x" class="Group-271">
+                <img src="<?php echo Url::to('@web/img/group-271.jpg', 'https'); ?>" srcset="img/group-271@2x.jpg 2x, img/group-271@3x.jpg 3x" class="Group-271">
                 <span class="site-menu-title lmstitle">LMS Quest</span>
             </a>
         </li>
@@ -654,7 +654,7 @@ AppAsset::register($this);
 	</a></div>
     <div class="site-footer-right">
         <!--Crafted with <i class="red-600 icon md-favorite"></i> by <a href="http://fierydevs.com">Fierydevs</a>-->
-		<img src="<?php echo Url::to('@web/images/logo2.jpg', true); ?>" class="profile-photo image responsive" id="profile-photo" width="15" height="20" alt="logo Image"/>
+		<img src="<?php echo Url::to('@web/images/logo2.jpg', 'https'); ?>" class="profile-photo image responsive" id="profile-photo" width="15" height="20" alt="logo Image"/>
     </div>
 </footer>
 <!-- Core  -->
