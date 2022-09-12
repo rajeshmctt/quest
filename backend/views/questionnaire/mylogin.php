@@ -54,11 +54,6 @@ $this->params['breadcrumbs'][] = $this->title;
 											<p><b>Category: </b><?=$model->category->name?></p>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-sm-8">
-											<p><b>Description: </b><?=$model->description ?></p>
-										</div>
-									</div>
 									<div class="row row-lg">
 										<div class="col-sm-10 col-md-offset-1">
 											<!-- Example Basic Form -->

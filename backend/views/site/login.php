@@ -61,8 +61,9 @@ $this->params['breadcrumbs'][] = $this->title;
 							<?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block btn-lg margin-top-40', 'name' => 'login-button']) ?>
 							
 						<?php ActiveForm::end(); ?>
-						<img src="<?php echo Url::to('@web/images/logo2.jpg', true); ?>" class="profile-photo image responsive" id="profile-photo" width="15" height="20" alt="logo Image"/><br>
-						<div class="">© <?= date('Y'); ?> <a target="_blank" rel="noopener noreferrer" href="https://coach-to-transformation.com/">Coach-To-Transformation</a></div>
+						<!--<?//php echo Url::to('@web/images/smlogo.png', true); ?>-->
+						<img src="images/smlogo.png" class="profile-photo image responsive" id="profile-photo" height="20" alt="logo Image"/><br>
+						<div class="">© <?= date('Y'); ?> <a target="_blank" rel="noopener noreferrer" href="https://quest.meeraq.com/">Quest</a></div>
 			</div>
         </div>
       </div>

@@ -39,8 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
                          <a class="panel-title collapsed" id="panel-theme" data-toggle="collapse" href="#exampleCollapseDefaultLevel"
                                   data-parent="#exampleAccordionDefault" aria-expanded="true"
                                   aria-controls="exampleCollapseDefaultLevel">
-								  <?= Html::encode($this->title) ?>
+								              <?= Html::encode($this->title) ?>
                                 </a>
+
+
                         </div>
 						<div class="panel-collapse collapse in" id="exampleCollapseDefaultLevel" aria-labelledby="exampleHeadingDefaultLevel"
                     role="tabpanel">
@@ -66,6 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								</div>--->
 
 
+
 					<?php $form = ActiveForm::begin(['options' => ['data-link-to' => 'assessment-answers-create']]); ?>
 <?php
 	$count =  count($dataProvider->getModels()); 
@@ -77,9 +80,18 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="tab">
 
 
+<div class="row">
+                                  <div class="col-sm-8">
+                                  </div>
+                                </div>
+
+                                
 <div class="list-item col-sm-12 col-md-12 rescard" data-key="<?= $mod->id ?>"><!--article-->
     <!--<a href="https://coach-to-transformation.com"> $model_name-->
 	
+
+                                      <div style="padding-left:20px; padding-bottom:20px"><p><?=$model->description ?></p></div>
+
 	<div class="incardasm"> <!--incardasn-->
 		<div class="row tp_res" >
 			<div class="col-xs-12" >

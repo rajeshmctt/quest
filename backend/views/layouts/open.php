@@ -144,8 +144,8 @@ AppAsset::register($this);
 					$log1 =  Url::to('@web/img/group-271.jpg', true); 
 					$log2 = str_replace('http','https',$log1);
 				?>
-				<img src="<?=$log2?>" srcset="img/group-271@2x.jpg 2x, img/group-271@3x.jpg 3x" class="Group-271">
-                <span class="site-menu-title lmstitle">LMS Quest</span>
+				<img src="img/group-271.jpg?v=2" srcset="img/group-271@2x.jpg 2x, img/group-271@3x.jpg 3x" class="Group-271">
+                <!--<span class="site-menu-title lmstitle">LMS Quest</span>-->
             </a>
         </li>
         <li class="site-menu-item">
@@ -182,11 +182,11 @@ AppAsset::register($this);
 <!-- Footer -->
 <footer class="site-footer">
     <!--<div class="site-footer-legal">© <?= date('Y'); ?> <a href="#">InMuto Consulting LLP</a></div>-->
-    <div class="site-footer-legal">© <?= date('Y'); ?> <a target="_blank" rel="noopener noreferrer" href="https://coach-to-transformation.com/">Coach-To-Transformation
+    <div class="site-footer-legal">© <?= date('Y'); ?> <a target="_blank" rel="noopener noreferrer" href="https://quest.meeraq.com/">InMuto Consulting Pvt Ltd
 	</a></div>
     <div class="site-footer-right">
         <!--Crafted with <i class="red-600 icon md-favorite"></i> by <a href="http://fierydevs.com">Fierydevs</a>-->
-		<img src="<?php echo Url::to('@web/images/logo2.jpg', true); ?>" class="profile-photo image responsive" id="profile-photo" width="15" height="20" alt="logo Image"/>
+		<img src="<?php echo Url::to('@web/images/logo2.jpg', true); ?>" class="profile-photo image responsive" id="profile-photo" height="20" alt="logo Image"/>
     </div>
 </footer>
 <!-- Core  -->

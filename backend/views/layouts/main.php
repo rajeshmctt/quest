@@ -206,8 +206,9 @@ AppAsset::register($this);
     <ul class="site-menu">
         <li>
             <a href="<?= Yii::$app->urlManager->createAbsoluteUrl("site/index"); ?>" style="position:relative">
-                <img src="<?php echo Url::to('@web/img/group-271.jpg', 'https'); ?>" srcset="img/group-271@2x.jpg 2x, img/group-271@3x.jpg 3x" class="Group-271">
-                <span class="site-menu-title lmstitle">LMS Quest</span>
+                <img src="img/group-271.jpg" srcset="img/group-271@2x.jpg 2x, img/group-271@3x.jpg 3x" class="Group-271">
+                <!--<?//php echo Url::to('@web/img/group-271.jpg', 'https'); ?>-->
+                <!--<span class="site-menu-title lmstitle">LMS Quest</span>-->
             </a>
         </li>
         <li class="site-menu-item">

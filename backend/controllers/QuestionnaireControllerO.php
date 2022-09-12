@@ -36,7 +36,7 @@ class QuestionnaireController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login','result','result-g', 'my-test', 'my-login', 'error', 'forgot-password', 'reset-password', 'captcha', 'change-password','test-notify','contact'],
+                        'actions' => ['login','result', 'my-test', 'my-login', 'error', 'forgot-password', 'reset-password', 'captcha', 'change-password','test-notify','contact'],
                         'allow' => true,
                         // 'roles' => ['?'],
                     ],
@@ -165,21 +165,16 @@ class QuestionnaireController extends Controller
         $nouser = 0; 
 
         if ($user->load(Yii::$app->request->post())) {
-            $umodel = User::find()->where(['email'=>$user->email])->one();
+            $umodel = User::find()->where(['email'=>$user->email, 'status'=>User::STATUS_ACTIVE])->one();
             // echo "<pre>"; print_r($umodel); exit;
             if(count((array)$umodel)!=0){
                 $par = base64_encode($umodel->id); 
-                $user->status = User::STATUS_ACTIVE;
-				if($user->save()){
-
-                }
 				return $this->redirect(['my-test','id'=>$id,'par'=>$par]);
             }else{
                 // $nouser = 1;	
-				$user->username = $user->username.rand(1,1000);	
+				// $model->username = $user->username;			
 				// $model->email = $user->email;			
 				// $password = $model->password_hash;
-                $user->status = User::STATUS_ACTIVE;
 				$user->setPassword(12345);//$model->password_hash
 				$user->generateAuthKey();
 				if($user->save()){
@@ -283,7 +278,7 @@ class QuestionnaireController extends Controller
 			// $keys = http_build_query($qkey);
 			// if($model->save()){
 				// return $this->redirect(['result','id'=>$qid,'par'=>$par]);
-				return $this->redirect(['result-g','id'=>$qid,'par'=>$par]); //13may rdm ,'keys'=>$keys
+				return $this->redirect(['result','id'=>$qid,'par'=>$par]); //13may rdm ,'keys'=>$keys
 			// }
         }
 		
@@ -342,107 +337,6 @@ class QuestionnaireController extends Controller
             'acorr' => $acorr,
             'qkey' => $qkey,
             'akey' => $akey,
-        ]);
-    }
-
-    /**
-     * Lists all AssessmentQuestionsAsm models.
-     * @return mixed
-     */
-    public function actionResultG($id='',$par)//,$keys
-    {
-        // echo $aid; exit;
-        $id = base64_decode(urldecode($id));
-        $pid = base64_decode(urldecode($par));
-		$user = User::find()->where(['id'=>$pid])->one();
-        $model = $this->findModel($id);
-        
-		$this->layout = "open";
-		// $asm->name = "test";
-		// $asm = Assessment::find()->where(['id'=>$aid])->one();
-		
-        $searchModel = new QuestionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
-		// 13may rdm comment $qkey = []
-		$qkey =[];
-		foreach($dataProvider->getModels() as $dp){
-			$qkey[] = $dp->id; //[$dp->section]
-		}
-		
-		
-        // echo "<pre>"; print_r($qkey); exit;
-		// $qkey = [];
-		// parse_str($keys,$qkey);
-		
-        $akey = [];
-        $acorr = [];
-        $ttl = [];
-        foreach($qkey as $val){
-            $aa_o = Answers::find()->where(['question_id'=>$val,'user_id'=>$pid,'status'=>10])->one();
-            $akey[$aa_o->question->section][$val] = $aa_o->option_id;
-            if(isset($ttl[$aa_o->question->section])){
-                $ttl[$aa_o->question->section]++;
-            }else{
-                $ttl[$aa_o->question->section]=1;
-            }
-            if($aa_o->option->is_correct){
-                // $acorr++;
-                if(isset($acorr[$aa_o->question->section])){
-                    $acorr[$aa_o->question->section]++;
-                }else{
-                    $acorr[$aa_o->question->section]=1;
-                }                
-            }else{                
-                if(isset($acorr[$aa_o->question->section])){
-                    $acorr[$aa_o->question->section]++;
-                    $acorr[$aa_o->question->section]--;
-                }else{
-                    $acorr[$aa_o->question->section]=0;
-                }
-            }
-        }
-        // echo "<pre>"; print_r($dataProvider->getModels()); exit;
-        // echo "<pre>"; print_r($acorr); print_r($ttl); exit;
-                
-
-
-/*
-        $array = [];
-        foreach($answers as $key=>$val){
-            // echo $key.'  ';
-            $model = $this->findModel($key);
-            $aa_model = new AssessmentAnswers();
-            $aa_model->aq_id = $key;
-            $aa_model->answer = $val;
-            $array[$aa_model->aq->question->competency->name][]=$val;
-            $aa_model->user_id = $user->id;
-            $aa_model->assessment_id = $aid;
-            // $aa_model->assessor_id = Yii::$app->user->identity->id;
-            // echo "<pre>"; print_r($aa_model); exit;
-            $aa_model->save();
-            // echo "<pre>"; print_r($aa_model->getErrors()); exit;
-        }
-
-        $com = [];
-        foreach($array as $k=>$v){
-            $com[$k] = array_sum($v);
-        }
-        $mail = \Yii::$app->mailer->compose(['html' => 'user-html', 'text' => 'user-text'], ['user_id' => $user->id, 'rec' => $user->first_name, 'com' => $com, 'title' => $asm->name])
-        ->setFrom(['developer@coach2transform.com' => 'Meeraq']);
-*/
-
-
-
-        return $this->render('resultg', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'model' => $model,
-            // 'asm' => isset($asm->name)?$asm->name:'',
-            'com' => $acorr,
-            'qkey' => $qkey,
-            'akey' => $akey,
-            'ttl' => $ttl,
-            'title' => $model->name
         ]);
     }
 
