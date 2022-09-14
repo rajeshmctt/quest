@@ -39,14 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
                          <a class="panel-title collapsed" id="panel-theme" data-toggle="collapse" href="#exampleCollapseDefaultLevel"
                                   data-parent="#exampleAccordionDefault" aria-expanded="true"
                                   aria-controls="exampleCollapseDefaultLevel" style="text-align:center">
-                             Thank you <!--Result -->
+                                  Thank you for your responses!
                                 </a>
                         </div>
 						<div class="panel-collapse collapse in" id="exampleCollapseDefaultLevel" aria-labelledby="exampleHeadingDefaultLevel"
                     role="tabpanel">
 							<div class="panel-body">
 					
-                            <h3>
+                            <h3 style="text-align:center">
 				<!--<div style="width:285px; height:65px;  background-image: url('https://coach-to-transformation.com/wp-content/uploads/2022/03/meeraqSM.png');"></div>-->
 				<img src="https://coach-to-transformation.com/wp-content/uploads/2022/03/meeraqSM.png" alt="meeraqlogo"></h3>
             <br>
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <!--hide temporarily-->
 			<div class="panel panel-default"><!---->
 				<div class="panel-heading">
-					<h3 class="panel-title" style="text-align:center"><?= trim($title) . " Levels" ?></h3>
+					<h3 class="panel-title" style="text-align:center">Your Awareness Levels</h3><!--< ?= trim($title) . " Levels" ?>-->
 				</div>
 				<div class="panel-body">
 					<div id="piechart"><!-- style="width: 100%; max-width:900px; height: 500px; "-->
@@ -72,16 +72,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr>
                                 <td style="text-align: right"><?=$k?>&nbsp;&nbsp;</td>
                                 <?php for($i=0;$i<$v;$i++){?>
-                                <td bgcolor="<?=$col[$c]?>" style="color:<?=$col[$c]?>">-------------</td><!--#a30158-->
+                                <td bgcolor="<?=$col[$c]?>" style="border: 2px solid white; color:<?=$col[$c]?>">-------------</td><!--#a30158-->
                                 <?php }
                                 for($i=0;$i<$ttl[$k]-$v;$i++){?>
-                                    <td bgcolor="#f1e5f7" style="color:#f1e5f7">-------------</td><!--#a30158-->
+                                    <td bgcolor="#c8c8c8" style="border: 2px solid white; color:#c8c8c8">-------------</td><!--#a30158-->
                                     <?php }
                                 ?>
                                 <!--space on the right -->
                                 <td style="text-align:center"><!--<b>&nbsp;< ?=$v?></b>--></td>
                                 <?php for($j=0;$j<(10-$v);$j++){?>
-                                <td bgcolor="white" style="color:white">22</td>
+                                <td bgcolor="white" style="color:white" class="bigc">__</td>
                                 <?php } ?>
                             </tr>
                         <?php $c++; } ?>
@@ -112,23 +112,32 @@ $this->params['breadcrumbs'][] = $this->title;
 				Now that you have your post-assessment scores, you can compare this with your pre-assessment scores and understand the dimension/s in which you have made progress, and the dimension/s which would need extra efforts. Try implementing what you have learnt in this program as much as possible, and you will be able to recognize the improvement in your emotional quotient. All the best!
 				<?php }else{ ?>
 				<!--Now that you understand where you are in each dimension, you can start working on any dimension/s you want to improve on. All the best.	-->
-				<p style="font-size:1.2em"><h4>Foundation of coaching  	</h4>
-Coaching involves the belief that the individual has the answers to their own problems within them. The coach is not a subject expert, but rather is focused on helping the individual to unlock their own potential. The focus is very much on the individual and what is inside their head.</p>
-<p style="font-size:1.2em"><h4>Listening with Empathy </h4>
-Empathic listening is a structured listening and questioning technique that allows you to develop and enhance relationships with a stronger understanding of what is being conveyed, both intellectually and emotionally.</p>
-<p style="font-size:1.2em"><h4>Asking questions with curiosity  	 </h4>
-Curiosity acts as a catalyst to discovery. Being curious when asking our questions means we are neither judgmental nor expecting a certain answer. On the contrary, we are becoming more welcoming and open to unknown space and have the questioning ability that allows us to navigate the employee’s thinking in the best possible way. </p>
-<p style="font-size:1.2em"><h4>Action Planning & Support </h4>
-A coaching action plan is meant to develop the employee’s skills, guide them towards a specific outcome, and complete goals faster, easier, and more efficiently. A good employee coaching plan for managers should continually serve as a guideline for the continuation of the employee’s growth even after her time with his coach is up.
+                <br><p style="font-size:1.2em">Here is what these parameters mean:</p>
+                
+                <br>
+				<h4>Foundation of coaching  	</h4>
+                <p style="font-size:1.2em">Coaching involves the belief that the individual has the answers to their own problems within them. The coach is not a subject expert, but rather is focused on helping the individual to unlock their own potential. The focus is very much on the individual and what is inside their head.</p>
+
+<br><h4>Listening with Empathy </h4>
+<p style="font-size:1.2em">Empathic listening is a structured listening and questioning technique that allows you to develop and enhance relationships with a stronger understanding of what is being conveyed, both intellectually and emotionally.</p>
+<br><h4>Asking questions with curiosity  	 </h4>
+<p style="font-size:1.2em">Curiosity acts as a catalyst to discovery. Being curious when asking our questions means we are neither judgmental nor expecting a certain answer. On the contrary, we are becoming more welcoming and open to unknown space and have the questioning ability that allows us to navigate the employee’s thinking in the best possible way. </p>
+<br>
+<h4>Action Planning & Support </h4>
+<p style="font-size:1.2em">A coaching action plan is meant to develop the employee’s skills, guide them towards a specific outcome, and complete goals faster, easier, and more efficiently. A good employee coaching plan for managers should continually serve as a guideline for the continuation of the employee’s growth even after her time with his coach is up.
 </p>
+<br>
+<p style="font-size:1.2em">We have curated the course structure in a way that will enable you to experience a shift in these areas after the course.</p>
+
 				<?php } ?><br>
 				<p style="font-size:1.2em">Happy Learning! </p>
 			<?php } ?>
 		<?php } ?>
 	</p>
-
-<p style="font-size:1.2em">Regards,<br>
-Team Meeraq</p>
+    <!--<div style="width:285px; height:65px;  background-image: url('https://coach-to-transformation.com/wp-content/uploads/2022/03/meeraqSM.png');"></div>-->
+    <img src="https://coach-to-transformation.com/wp-content/uploads/2022/03/meeraqSM.png" alt="meeraqlogo" style="margin-left: -3px;">
+    <!--<p style="font-size:1.2em">Regards,<br>
+Team Meeraq</p>-->
 
 
 
@@ -149,3 +158,17 @@ Team Meeraq</p>
 	
     
 </div>
+
+<?php
+Yii::$app->view->registerCss('
+/*th, td {
+    border: 1px solid;
+  }*/
+  
+@media screen and (max-width: 767px) {
+    .bigc{
+        display:none;
+    }
+}
+
+');?>

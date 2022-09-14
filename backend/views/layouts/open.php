@@ -31,6 +31,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <?php $this->head() ?>
     <!--stylesheet-->
     <?php $this->registerCssFile("@web/css/bootstrap-editable.css"); ?>
